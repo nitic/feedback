@@ -1,21 +1,47 @@
 (function () {
-  //fetchData();
+
+    Swal.fire({
+        title: 'กรุณารอสักครู่...',
+        text: 'ระบบกำลังประมวลผลข้อมูล',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+    document.getElementById('start-date').value = new Date().getFullYear() + '-06-01';
+    document.getElementById("end-date").value = new Date().getFullYear()+1 + '-05-31';
+
+    const startdate_picker = new Pikaday({
+        field: document.getElementById("start-date"),
+        format: "YYYY-MM-DD",
+      });
+
+    const enddate_picker = new Pikaday({
+        field: document.getElementById("end-date"),
+        format: "YYYY-MM-DD"
+    });
+
+    fetchData();
 })();
 
+function show() {
+    fetchData();
+}
+
 function fetchData() {
-    // const startDate = document.getElementById('startDate').value;
-    // const endDate = document.getElementById('endDate').value;
-    // const filterName = document.getElementById('filterName').value;
+     
+    const sheetParam = 'Data';
+    const startParam = document.getElementById('start-date').value;
+    const endParam = document.getElementById('end-date').value;
+    const checkboxes = document.querySelectorAll('input[name="myCheckbox"]:checked');
+    const TypeParam = Array.from(checkboxes).map(checkbox => checkbox.value);
+    const list = document.getElementById('commentList');
 
-    const API_URL = 'https://script.google.com/macros/s/AKfycbzJhvskEg4qxFjfZIOLNXrvLaWcnpmwTODJG7f7vCiVpC16W_9VoDVlnCcVuIV1C10W/exec';
+    list.innerHTML = '';
 
-    // ฟังก์ชันเพื่อดึงข้อมูล
-                    let sheetParam = 'Data';
-                    let startParam = '2024-08-01';
-                    let endParam = '2024-08-30';
                     let NameParam = 'นิติ โชติแก้ว';
-                    let TypeParam = ['นักศึกษา', 'อาจารย์','บุคลากรโรงพยาบาล'];
-                    axios.get(`${API_URL}?sheet=${sheetParam}&startDate=${startParam}&endDate=${endParam}&filterName=${NameParam}&filterType=${TypeParam}`, {
+                    axios.get(`${settings.API_URL}?sheet=${sheetParam}&startDate=${startParam}&endDate=${endParam}&filterName=${NameParam}&filterType=${TypeParam}`, {
                         headers: {
                             "Content-Type": "application/json"
                            },
@@ -29,41 +55,66 @@ function fetchData() {
                             let stat_speed = [];
                             let stat_accuracy = [];
                             let stat_service = [];
-                            let stat_comment = [];
 
                             data.forEach(row => {
                                stat_type.push(row.type);
                                stat_speed.push(parseFloat(row.speed));
                                stat_accuracy.push(parseFloat(row.accuracy));
                                stat_service.push(parseFloat(row.service));
-                               stat_comment.push(row.comment);
+
+                                if(row.comment){
+                                   // stat_comment.push(row.comment);
+                                   let newItem = document.createElement('li');
+                                    newItem.textContent = row.comment;
+                                    list.appendChild(newItem);
+                                }
+                               
 
                             });
+
+                            let xbar_speed = getMean(stat_speed);
+                            let xbar_accuracy = getMean(stat_accuracy);
+                            let xbar_service = getMean(stat_service);
+                            let xbar_total = (xbar_speed + xbar_accuracy + xbar_service) / 3;
+
+                            let sd_speed = getSD(stat_speed);
+                            let sd_accuracy = getSD(stat_accuracy);
+                            let sd_service = getSD(stat_service);
+                            let sd_total = (sd_speed + sd_accuracy + sd_service) / 3;
+
+
+
+                            document.getElementById('countTotal').textContent = data.length;
+                            document.getElementById('countStudent').textContent = stat_type.filter(c => c === 'นักศึกษา').length;
+                            document.getElementById('countLecturer').textContent = stat_type.filter(c => c === 'อาจารย์').length;
+                            document.getElementById('countStaff').textContent = stat_type.filter(c => c === 'บุคลากรสายสนับสนุน').length;
+                            document.getElementById('countHospital').textContent = stat_type.filter(c => c === 'บุคลากรโรงพยาบาล').length;
+
+                            document.getElementById('statSpeed').textContent = 'X̅ = ' + xbar_speed.toFixed(2) + '/ sd =' + sd_speed.toFixed(2);
+                            document.getElementById('statAccuracy').textContent = 'X̅ = ' + xbar_accuracy.toFixed(2) + '/ sd =' + sd_accuracy.toFixed(2);
+                            document.getElementById('statService').textContent = 'X̅ = ' + xbar_service.toFixed(2) + '/ sd =' + sd_service.toFixed(2);
+                            document.getElementById('xbarTotal').textContent = xbar_total.toFixed(2);
+                            document.getElementById('sdTotal').textContent = sd_total.toFixed(2);
+
+
+                            document.getElementById('progress-speed').style.width = (xbar_speed/5)*100 + '%';
+                            document.getElementById('progress-accuracy').style.width = (xbar_accuracy/5)*100 + '%';
+                            document.getElementById('progress-service').style.width = (xbar_service/5)*100 + '%';
+
+                            Swal.close();
                          // console.log(stat_type.filter(c => c === 'อาจารย์').length);
-                         // console.log(getMean(stat_speed));
                          // console.log(getSD(stat_speed));
-                         console.log(stat_comment);
 
                         })
                         .catch(error => {
-                            console.error('GET Error:', error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text:  error,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                              });
+                            //console.error('GET Error:', error);
                         });
-}
-
-function displayData(data) {
-    const tbody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-    tbody.innerHTML = ''; // ล้างข้อมูลเก่า
-
-    data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${row.datetime}</td>
-            <td>${row.name}</td>
-            <td>${row.age}</td>
-            <td>${row.score}</td>
-        `;
-        tbody.appendChild(tr);
-    });
 }
 
 // Arithmetic mean คำนวณหาค่าเฉลี่ยกลาง

@@ -4,15 +4,26 @@ body {
 }
 
 .card {
-
     width: 350px;
     border: none;
     box-shadow: 5px 6px 6px 2px #e9ecef;
     border-radius: 12px;
 }
 
-.circle-image img {
+.dot {
+  height: 18px;
+  width: 18px;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid #fff;
+  top: -120px;
+  left: 140px;
+  z-index: 1000;
+}
 
+.circle-image img {
     border: 6px solid #fff;
     border-radius: 100%;
     padding: 0px;
