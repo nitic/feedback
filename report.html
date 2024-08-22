@@ -30,22 +30,38 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
-                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="นักศึกษา" checked>
-                                <label class="labels" for="inlineCheckbox1">นักศึกษา</label>
+                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="นักศึกษาปริญญาตรี" checked>
+                                <label class="labels">นักศึกษาปริญญาตรี</label>
                               </div>
                               <div class="col-md-6">
-                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="อาจารย์" checked>
-                                <label class="labels" for="inlineCheckbox2">อาจารย์</label>
+                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="นักศึกษาบัณฑิตศึกษา" checked>
+                                <label class="labels">นักศึกษาบัณฑิตศึกษา</label>
                               </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="บุคลากรสายสนับสนุน" checked>
-                                <label class="labels" for="inlineCheckbox3">บุคลากรสายสนับสนุน</label>
+                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="อาจารย์" checked>
+                                <label class="labels">อาจารย์</label>
+                              </div>
+                              <div class="col-md-6">
+                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="นักวิทยาศาสตร์" checked>
+                                <label class="labels">นักวิทยาศาสตร์</label>
+                              </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="บุคลากรสํานักงานบริหารคณะ" checked>
+                                <label class="labels">บุคลากรสํานักงานฯ</label>
                               </div>
                               <div class="col-md-6">
                                 <input class="form-check-input" type="checkbox" name="myCheckbox" value="บุคลากรโรงพยาบาล" checked>
-                                <label class="labels" for="inlineCheckbox4">บุคลากรโรงพยาบาล</label>
+                                <label class="labels">บุคลากรโรงพยาบาล</label>
+                              </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <input class="form-check-input" type="checkbox" name="myCheckbox" value="ผู้ใช้บริการโรงพยาบาล" checked>
+                                <label class="labels">ผู้ใช้บริการโรงพยาบาล</label>
                               </div>
                         </div>
                         <div class="mt-5 text-center"><button class="btn btn-primary profile-button" onclick="show()" type="button">แสดงผล</button></div>
@@ -60,11 +76,21 @@
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">นักศึกษา</h5>
-                                    <p class="card-text"><span id="countStudent"></span> คน</p>
+                                    <h5 class="card-title">นักศึกษาปริญญาตรี</h5>
+                                    <p class="card-text"><span id="countStudentUG"></span> คน</p>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">นักศึกษาบัณฑิตศึกษา</h5>
+                                    <p class="card-text"><span id="countStudentGD"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
                         <div class="col-sm-6">
                             <div class="card"> 
                             <div class="card-body">
@@ -73,13 +99,21 @@
                             </div>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="card"> 
+                            <div class="card-body">
+                                <h5 class="card-title">นักวิทยาศาสตร์</h5>
+                                <p class="card-text"><span id="countScientist"></span> คน</p>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">บุคลากรสายสนับสนุน</h5>
-                                    <p class="card-text"><span id="countStaff"></span> คน</p>
+                                    <h5 class="card-title">บุคลากรสํานักงานฯ</h5>
+                                    <p class="card-text"><span id="countStaffOffice"></span> คน</p>
                                 </div>
                             </div>
                         </div>
@@ -87,10 +121,21 @@
                             <div class="card"> 
                             <div class="card-body">
                                 <h5 class="card-title">บุคลากรโรงพยาบาล</h5>
-                                <p class="card-text"><span id="countHospital"></span> คน</p>
+                                <p class="card-text"><span id="countStaffHospital"></span> คน</p>
                             </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">ผู้ใช้บริการโรงพยาบาล</h5>
+                                    <p class="card-text"><span id="countCustomer"></span> คน</p>
+                                </div>
+                            </div>
+                        </div>
+                       
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
@@ -151,8 +196,10 @@
                             
                     </div><br>
                     <div class="col-md-12">
+                        <div style="height: 750px; overflow: auto;">
                         <ul id="commentList">
                         </ul>
+                        </div>
 
                     </div>
                 </div>

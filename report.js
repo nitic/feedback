@@ -85,10 +85,14 @@ function fetchData() {
 
 
                             document.getElementById('countTotal').textContent = data.length;
-                            document.getElementById('countStudent').textContent = stat_type.filter(c => c === 'นักศึกษา').length;
+                            document.getElementById('countStudentUG').textContent = stat_type.filter(c => c === 'นักศึกษาปริญญาตรี').length;
+                            document.getElementById('countStudentGD').textContent = stat_type.filter(c => c === 'นักศึกษาบัณฑิตศึกษา').length;
                             document.getElementById('countLecturer').textContent = stat_type.filter(c => c === 'อาจารย์').length;
-                            document.getElementById('countStaff').textContent = stat_type.filter(c => c === 'บุคลากรสายสนับสนุน').length;
-                            document.getElementById('countHospital').textContent = stat_type.filter(c => c === 'บุคลากรโรงพยาบาล').length;
+                            document.getElementById('countScientist').textContent = stat_type.filter(c => c === 'นักวิทยาศาสตร์').length;
+                            document.getElementById('countStaffOffice').textContent = stat_type.filter(c => c === 'บุคลากรสํานักงานบริหารคณะ').length;
+                            document.getElementById('countStaffHospital').textContent = stat_type.filter(c => c === 'บุคลากรโรงพยาบาล').length;
+                            document.getElementById('countCustomer').textContent = stat_type.filter(c => c === 'ผู้ใช้บริการโรงพยาบาล').length;
+
 
                             document.getElementById('statSpeed').textContent = 'X̅ = ' + xbar_speed.toFixed(2) + '/ sd =' + sd_speed.toFixed(2);
                             document.getElementById('statAccuracy').textContent = 'X̅ = ' + xbar_accuracy.toFixed(2) + '/ sd =' + sd_accuracy.toFixed(2);
