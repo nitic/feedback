@@ -9,8 +9,16 @@
         }
       });
 
-    document.getElementById('start-date').value = new Date().getFullYear() + '-06-01';
-    document.getElementById("end-date").value = new Date().getFullYear()+1 + '-05-31';
+    const date = new Date();
+    const month = date.getMonth(); 
+    let year = date.getFullYear();
+
+    if (month < 5) {
+    year -= 1;
+    }
+
+    document.getElementById('start-date').value = year + '-06-01';
+    document.getElementById("end-date").value = date.getFullYear() + '-05-31';
 
     const startdate_picker = new Pikaday({
         field: document.getElementById("start-date"),
@@ -41,7 +49,7 @@ function fetchData() {
     list.innerHTML = '';
 
                     let NameParam = 'นิติ โชติแก้ว';
-                    axios.get(`${settings.API_URL}?sheet=${sheetParam}&startDate=${startParam}&endDate=${endParam}&filterName=${NameParam}&filterType=${TypeParam}`, {
+                    axios.get(`${settings.reportURL}?sheet=${sheetParam}&startDate=${startParam}&endDate=${endParam}&filterName=${NameParam}&filterType=${TypeParam}`, {
                         headers: {
                             "Content-Type": "application/json"
                            },
